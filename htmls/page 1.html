@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style1.css">
+    <title>Data Structures</title>
+</head>
+<body>
+    <div class="complexity">
+        <header>Basics</header>
+        <h1>Time and Space Complexity</h1><br>
+        <p>
+            Time complexity measures how the time taken by an algorithm grows with the input size, while space complexity measures the extra memory it needs. For example, sorting a list of 10 items is faster and requires less space than sorting 1,000 items.
+        </p>
+        <h1>Basic Count and Step Count</h1><br>
+        <p>
+            Basic count refers to counting the simplest operations performed by the algorithm, such as addition or comparison. Step count looks at every step the algorithm takes, including loops and nested operations. For instance, if a loop runs 10 times, the step count is 10.
+        </p>
+        <h1>Basic Operation</h1><br>
+        <p>
+            The basic operation is the most critical action the algorithm performs. For example, in a sorting algorithm, comparing two numbers is the basic operation since it determines the order of elements.
+        </p>
+        <h1>Towers of Hanoi</h1>
+        <p>
+            The Towers of Hanoi is a classic mathematical puzzle involving three rods and n disks of different sizes. The goal is to move all the disks from the source rod to the destination rod, using an auxiliary rod, while following these rules: only one disk can be moved at a time, a larger disk cannot be placed on top of a smaller disk, and only the top disk of a rod can be moved. The puzzle is solved recursively: first, move n−1 disks to the auxiliary rod, then move the largest disk to the destination rod, and finally move the n−1 disks from the auxiliary rod to the destination rod. The time complexity is derived from the recurrence relation T(n)=2T(n−1)+1, where T(n) represents the number of moves for n disks. Solving this relation gives T(n)=2^n−1, showing exponential growth with the number of disks.
+        </p>
+    </div>
+    <div class="data_structures">
+        <header>Data Structures</header>
+        <h1>Hash</h1><br>
+        <p>
+            A Hash Table is a data structure that maps keys to values for fast lookups, insertions, and deletions in average O(1) time. It uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found. Collisions, when two keys map to the same index, are handled using techniques like chaining or open addressing.
+        </p>
+        <h1>Binary Search Tree</h1><br>
+        <p>
+            A BST is a binary tree where each node has at most two children, and the left child's value is less than its parent, while the right child's value is greater. This property allows for efficient searching, insertion, and deletion operations, with an average time complexity of O(logn), though it can degrade to O(n) for unbalanced trees.
+        </p>
+        <h1>AVL Tree</h1><br>
+        <p>
+            An AVL Tree is a self-balancing binary search tree where the height difference (balance factor) between the left and right subtrees of any node is at most one. Rotations (single or double) are used to maintain balance after insertions or deletions, ensuring O(logn) time complexity for operations.
+        </p>
+        <h1>2-3 Tree</h1><br>
+        <p>
+            A 2-3 Tree is a balanced search tree where each node can have either two or three children and stores one or two keys. This structure ensures all leaves are at the same depth and provides guaranteed O(logn) time complexity for searching, insertion, and deletion by redistributing keys and splitting nodes when necessary.
+        </p>
+        <h1>Red-Black Tree</h1><br>
+        <p>
+            A Red-Black Tree is a self-balancing binary search tree where each node is colored either red or black, with rules ensuring no two consecutive red nodes and balanced black heights. These properties maintain O(logn) time complexity for all operations, making it efficient for dynamic data.
+        </p>
+        <h1>Depth First Search(DFS)</h1><br>
+        <p>
+            DFS is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It uses a stack (explicit or recursive call stack) and is useful for tasks like cycle detection, pathfinding, and topological sorting, with a time complexity of O(V+E), where V is the number of vertices and E is the number of edges.
+        </p>
+        <h1>Breadth-First Search(BFS)</h1><br>
+        <p>
+            BFS is a graph traversal algorithm that explores all neighbors of a node before moving to the next level of nodes. It uses a queue and is commonly used for finding the shortest path in unweighted graphs. Its time complexity is also O(V+E).
+        </p>
+        <h1>Fenwick Tree</h1><br>
+        <p>
+            A Fenwick Tree is a data structure used for efficient prefix sum and point updates in O(logn) time. It represents cumulative frequency tables and allows querying and updating elements dynamically, making it ideal for range sum problems.
+        </p>
+        <h1>Range Queries</h1><br>
+        <p>
+            Range queries involve finding aggregate information (like sums, minimums, or maximums) over a subarray or range of data. Data structures like Segment Trees, Fenwick Trees, or Sparse Tables are commonly used for efficient query (O(logn)) and update operations.
+        </p>
+        <h1>Skip List</h1><br>
+        <p>
+            A Skip List is a probabilistic data structure that extends a linked list with multiple levels, where higher levels skip over nodes for faster traversal. By balancing the levels, it achieves O(logn) average time complexity for search, insert, and delete operations.
+        </p>
+        <h1>Trie</h1><br>
+        <p>
+            A Trie, or prefix tree, is a tree-like data structure that stores strings character by character, enabling fast prefix-based searches. Each node represents a character, and paths through the tree represent words. It supports insert, search, and delete operations in O(m), where m is the length of the word.
+        </p>
+    </div>
+</body>
+</html>

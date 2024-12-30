@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style2.css">
+    <title>Algorithm Design Techniques</title>
+</head>
+<body>
+    <header>Algorithm Design Techniques</header>
+    <div class="algorithm">
+        <h1>Brute Force</h1><br>
+        <p>Brute force is a straight forward approach to solving a problem, usually, directly based on 
+            the problem statement and definitions of the concepts involved. 
+            Basically it’s an exhaustive algorithm. <br>
+            Example: a brute force algorithm to find the divisors of a natural number ‘n’ would 
+            enumerate all integers from 1 to n and check whether each of them divides n without 
+            reminders.<br>
+            Basic Algorithm:
+            c<-first(P)
+            while c != NULL do
+             if valid(P, c) then output(P, c)
+             c <- next (P, c)
+            end while<br>
+            Here P is the problem and c is the solution instance. The notion that algorithm captures is 
+            that it generate a next solution instance for the given problem and if it is valid, then 
+            outputs it. <br>
+            Brute force is basically a combinatorial explosion.<br> 
+            Examples: <br>
+            1. Divisor of a number problem: If n has 16 decimal digits, then it takes atleast 1015
+            instructions to achieve the task. When n is 16 bit natural number then it has 19 
+            decimal digits on average and search will take around 10 years<br>
+            2. Arrangement problem: for 10 letters we have 10! = 3,628,800 candidates, generate 
+            and test can happen in less than one second. With 11 letters we have 11! = 
+            39,916,800 which is a 1000% increase. With 20 letters we would need 10 years for 
+            the operation execution. <br>
+            How do we speed up?<br>
+            1. We can try to reduce the search space. For example, for the problem to find all 
+            integers between 1 and 1000000 that are evenly divisible by 417, naïve brute force 
+            would generate all and test one by one. A better approach is to start with 417 and 
+            repeatedly add 417 until the number exceeds 1000000. This would include 
+            1000000/417 steps and no tests<br>
+            2. We can re-order the search space. We could test the most promising candidates 
+            first. We could ask the question, what is the probability that the next iteration 
+            would be a valid solution?<br>
+        </p>
+        <h1>Decrease and Conquer</h1>
+        <p>
+            It is based on exploiting the relationship between a solution to a given instance of a 
+problem and solution to a smaller instance of the same problem. 
+Once the relation is established, it can be either exploited by top-down approach using 
+recursion or bottom-up approach without recursion. <br>
+The technique has variations:<br>
+Decrease by a constant<br>
+Decrease by a constant factor<br>
+Variable size decrease<br>
+Example: for the problem to compute an,<br> 
+Top down approach is:<br>
+f(n) = f(n-1)*a if n>1<br>
+ a if n = 1<br>
+Bottom-up approach is to multiply a by itself n-1 times. <br>
+Though bottom up approach looks like a brute force technique, it is not. We have arrived 
+at the approach using different thought process. <br>
+Examples:<br>
+Insertion Sort<br>
+Depth First Search<br>
+Breadth First Search<br>
+Topological Sorting<br>
+Josephus Problem<br>
+The Game of Nim<br>
+Interpolation Search<br>
+        </p>
+        <h1>Divide and Conquer</h1>
+        <p>
+            The technique is based on based on multi-branched recursion. A divide and conquer 
+algorithm works by recursively breaking down a problem into two or more sub-problems 
+of the same or related type, until these become simple enough to be solved directly. The 
+solutions to the sub-problems are then combined to give a solution to the original 
+problem.
+        </p>
+        <h1>Transform and Conquer</h1>
+        <p>
+            A problem instance is transformed to one of the below before the solution is obtained.<br> 
+Instance simplification: transform to a simpler or more convenient instance of the 
+same problem<br>
+Representation change: transform to a different representation of the same 
+instance<br>
+Problem reduction: transform to an instance of a different problem for which an 
+algorithm is already available<br>
+        </p>
+        <h1>Dynamic Programming</h1>
+        <p>
+            Dynamic programming is a method for solving a complex problem by breaking it down 
+into a collection of simpler sub-problems, solving each of those sub-problems just once, 
+and storing their solutions. The next time the same sub-problem occurs, instead of recomputing its solution, one simply looks up the previously computed solution, thereby 
+saving computation time at the expense of a modest expenditure in storage space. 
+The technique of storing solutions to subproblems instead of recomputing them is called 
+"memoization".
+Dynamic programming algorithms are often used for optimization. A dynamic 
+programming algorithm will examine the previously solved subproblems and will 
+combine their solutions to give the best solution for the given problem.
+        </p>
+        <h1>Greedy Technique</h1>
+        <p>
+            A greedy algorithm is an algorithmic paradigm that follows the problem solving heuristic 
+of making the locally optimal choice at each stage with the hope of finding a global 
+optimum.
+        </p>
+        <h1>Space and Time trade-off</h1>
+        <p>
+            A space–time or time–memory trade-off is a case where an algorithm or program trades 
+increased space usage with decreased time. Here, space refers to the data storage 
+consumed in performing a given task (RAM, HDD, etc), and time refers to the time 
+consumed in performing a given task (computation time or response time). The most 
+common situation is an algorithm involving a lookup table: an implementation can 
+include the entire table, which reduces computing time, but increases the amount of 
+memory needed, or it can compute table entries as needed, increasing computing time, 
+but reducing memory requirements.
+        </p>
+        <h1>Randomized Algorithms</h1>
+        <p>
+            A space–time or time–memory trade-off is a case where an algorithm or program trades 
+increased space usage with decreased time. Here, space refers to the data storage 
+consumed in performing a given task (RAM, HDD, etc), and time refers to the time 
+consumed in performing a given task (computation time or response time). The most 
+common situation is an algorithm involving a lookup table: an implementation can 
+include the entire table, which reduces computing time, but increases the amount of 
+memory needed, or it can compute table entries as needed, increasing computing time, 
+but reducing memory requirements.
+        </p>
+        <h1>Backtracking</h1>
+        <p>
+            9. Backtracking
+Backtracking is a general algorithm for finding all (or some) solutions to some 
+computational problem, that incrementally builds candidates to the solutions, and 
+abandons each partial candidate ("backtracks") as soon as it determines that candidate
+cannot possibly be completed to a valid solution.
+Backtracking is an important tool for solving constraint satisfaction problems, such as 
+crosswords, verbal arithmetic, Sudoku, and many other puzzles.
+        </p>
+    </div>
+</body>
+</html>

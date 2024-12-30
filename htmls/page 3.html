@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style3.css">
+    <title>Algorithms</title>
+</head>
+<body>
+    <div class="graph">
+    <header>Graph Algorithms</header>
+    <h1>DFS</h1>
+    <p>
+        DFS explores a graph by traversing as far as possible along each branch before backtracking. It uses a stack (either explicitly or via recursion) and is used for tasks like detecting cycles, finding strongly connected components, and topological sorting. Its time complexity is O(V+E), where V is the number of vertices and E is the number of edges.
+    </p>
+    <h1>BFS</h1>
+    <p>
+        BFS explores the graph level by level, visiting all nodes at distance 
+k before visiting nodes at distance k+1. It uses a queue to manage the nodes, and it is especially useful for finding the shortest path in unweighted graphs. Its time complexity is also O(V+E).
+    </p>
+    <h1>Dijkstra's Algorithm</h1>
+    <p>
+        Dijkstra’s algorithm finds the shortest path from a source node to all other nodes in a graph with non-negative edge weights. It uses a priority queue (or min-heap) to select the node with the smallest tentative distance. The time complexity is O(ElogV) when using a priority queue with an adjacency list.
+    </p>
+    <h1>Bellman-Ford Algorithm</h1>
+    <p>
+        The Bellman-Ford algorithm also finds the shortest paths from a single source node, but it can handle graphs with negative edge weights. It works by relaxing all edges V−1 times, where V is the number of vertices. The time complexity is O(V⋅E).
+    </p>
+    <h1>Flyod-Warshall Algorithm</h1>
+    <p>
+        This algorithm finds the shortest paths between all pairs of vertices in a weighted graph. It iteratively updates the shortest path estimates for every pair of vertices. Its time complexity is O(V^3), making it inefficient for large graphs.
+    </p>
+    <h1>Prim's Algorithm</h1>
+    <p>
+        Prim’s algorithm finds the minimum spanning tree (MST) of a graph with non-negative edge weights. It starts with an arbitrary vertex and grows the MST by adding the smallest edge that connects a vertex in the tree to a vertex outside the tree. The time complexity is O(ElogV) when implemented with a priority queue.
+    </p>
+    <h1>Kruskal's Algorithm</h1>
+    <p>
+        Kruskal’s algorithm also finds the MST, but it works by sorting all edges and adding the smallest edge that does not form a cycle. It uses a union-find data structure to manage connected components. The time complexity is 
+O(ElogE), which simplifies to O(ElogV) since E≤V^2
+</p></div>
+<div class="string">
+    <header>String Search Algorithms</header>
+    <h1>Knuth-Morris-Pratt Algorithm</h1>
+    <p>
+        The KMP algorithm improves the naive string matching by using a preprocessing phase to create a partial match table (also called the "prefix function"), which allows the search to skip over redundant comparisons. It runs in O(n+m) time.
+    </p>
+    <h1>Rabin-Karp Algorithm</h1>
+    <p>
+        This algorithm uses hashing to find occurrences of a pattern in a text. It computes a hash value for the pattern and for each substring of the text, comparing the hashes instead of the actual characters. The average time complexity is O(n+m), but it can be O(n⋅m) in the worst case due to hash collisions.
+    </p>
+    <h1>Brute Force String Search Algorithm(BFSS)</h1>
+    <p>
+        The naive approach to string matching checks every substring of the text to see if it matches the pattern. It runs in O(n⋅m) time, where n is the length of the text and m is the length of the pattern.
+    </p>
+    <h1>Booyer-Moore Algorithm</h1>
+    <p>
+        The Bad Symbol Shift Table in the Boyer-Moore algorithm determines how far to shift the pattern when a mismatch occurs, based on the last occurrence of the mismatched character in the pattern. The Good Suffix Shift Table helps shift the pattern efficiently by using the longest suffix of the matched part of the pattern that can align with another prefix or suffix of the pattern. Together, these tables allow the algorithm to skip over sections of the text and reduce the number of comparisons, improving search efficiency.
+    </p>
+</div>
+
+</body>
+</html>
