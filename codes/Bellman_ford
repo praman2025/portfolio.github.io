@@ -1,1 +1,35 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void bellmanFord(int V, vector<vector<int>> &edges, int src) {
+    vector<int> dist(V, INT_MAX);
+    dist[src] = 0;
+
+    for (int i = 1; i < V; i++) {
+        for (auto edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            int weight = edge[2];
+
+            if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+            }
+        }
+    }
+
+    for (auto edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        int weight = edge[2];
+
+        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+            cout << "Negative weight cycle detected\n";
+            return;
+        }
+    }
+
+    for (int i = 0; i < V; i++)
+        cout << "Node " << i << ", Distance: " << dist[i] << endl;
+}
 
