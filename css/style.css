@@ -253,3 +253,33 @@ footer{
     background-color: #333333;
     font-size: 40px;
 }
+.reflections{
+    background-color: white;
+}
+.reflections h1{
+    color: #F5C6CE;
+    font-size: 50px;
+}
+.reflections .container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    align-items:center;
+    gap:2.5rem;
+}
+.reflections .box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#F5F5DC;
+    height:600px;
+    border-radius:3rem ;
+    cursor:pointer;
+    border:5px solid transparent;
+    transition: 0.2s ease-in-out; 
+}
+.reflections .box:hover{
+    background:#AEC6CF;
+    color:var(--main-color);
+    border:5px solid var(--main-color);
+    transform:scale(1.03);
+}
