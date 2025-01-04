@@ -1,154 +1,167 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <unordered_map>
 #include <algorithm>
 #include <climits>
 
 using namespace std;
 
-class MinHeap {
-private:
-    vector<int> heap;
-
-    void heapifyUp(int index) {
-        while (index > 0 && heap[parent(index)] > heap[index]) {
-            swap(heap[parent(index)], heap[index]);
-            index = parent(index);
-        }
-    }
-
-    void heapifyDown(int index) {
-        int smallest = index;
-        if (left(index) < heap.size() && heap[left(index)] < heap[smallest])
-            smallest = left(index);
-        if (right(index) < heap.size() && heap[right(index)] < heap[smallest])
-            smallest = right(index);
-        if (smallest != index) {
-            swap(heap[index], heap[smallest]);
-            heapifyDown(smallest);
-        }
-    }
-
-    int parent(int index) { return (index - 1) / 2; }
-    int left(int index) { return 2 * index + 1; }
-    int right(int index) { return 2 * index + 2; }
-
-public:
-    void insert(int value) {
-        heap.push_back(value);
-        heapifyUp(heap.size() - 1);
-    }
-
-    int extractMin() {
-        if (heap.empty()) return -1;
-        int root = heap[0];
-        heap[0] = heap.back();
-        heap.pop_back();
-        heapifyDown(0);
-        return root;
-    }
-
-    bool isEmpty() {
-        return heap.empty();
-    }
-};
-
 struct Edge {
-    int src, dest, weight;
+    int u, v, weight;
+    bool operator<(const Edge& other) const {
+        return weight < other.weight;
+    }
 };
-
-bool compareEdges(Edge a, Edge b) {
-    return a.weight < b.weight;
-}
 
 class Graph {
 public:
     int V;
     vector<vector<pair<int, int>>> adjList;
 
-    Graph(int vertices) : V(vertices) {
-        adjList.resize(vertices);
+    Graph(int V) {
+        this->V = V;
+        adjList.resize(V);
     }
 
     void addEdge(int u, int v, int weight) {
-        adjList[u].push_back({v, weight});
-        adjList[v].push_back({u, weight});
+        adjList[u].emplace_back(v, weight);
+        adjList[v].emplace_back(u, weight);
     }
 
-    void dijkstra(int src) {
-        vector<int> dist(V, INT_MAX);
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        pq.push({0, src});
-        dist[src] = 0;
-
-        while (!pq.empty()) {
-            int u = pq.top().second;
-            pq.pop();
-
-            for (auto neighbor : adjList[u]) {
-                int v = neighbor.first;
-                int weight = neighbor.second;
-
-                if (dist[u] + weight < dist[v]) {
-                    dist[v] = dist[u] + weight;
-                    pq.push({dist[v], v});
+    vector<Edge> getAllEdges() {
+        vector<Edge> edges;
+        for (int u = 0; u < V; ++u) {
+            for (auto& [v, weight] : adjList[u]) {
+                if (u < v) {
+                    edges.push_back({u, v, weight});
                 }
             }
         }
-
-        for (int i = 0; i < V; ++i)
-            cout << "Shortest distance to node " << i << " is " << dist[i] << endl;
-    }
-
-    int findParent(vector<int>& parent, int node) {
-        if (parent[node] != node)
-            parent[node] = findParent(parent, parent[node]);
-        return parent[node];
-    }
-
-    void kruskal(vector<Edge>& edges) {
-        sort(edges.begin(), edges.end(), compareEdges);
-        vector<int> parent(V);
-        for (int i = 0; i < V; ++i)
-            parent[i] = i;
-        vector<Edge> mst;
-
-        for (auto edge : edges) {
-            int srcParent = findParent(parent, edge.src);
-            int destParent = findParent(parent, edge.dest);
-
-            if (srcParent != destParent) {
-                mst.push_back(edge);
-                parent[srcParent] = destParent;
-            }
-        }
-
-        for (auto edge : mst)
-            cout << "Edge: " << edge.src << "-" << edge.dest << " Weight: " << edge.weight << endl;
+        return edges;
     }
 };
 
+class DisjointSet {
+public:
+    vector<int> parent, rank;
+
+    DisjointSet(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        for (int i = 0; i < n; ++i) parent[i] = i;
+    }
+
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+
+    void unite(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+
+        if (rootX != rootY) {
+            if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
+    }
+};
+
+vector<Edge> kruskalMST(Graph& graph) {
+    vector<Edge> edges = graph.getAllEdges();
+    sort(edges.begin(), edges.end());
+
+    DisjointSet ds(graph.V);
+    vector<Edge> mst;
+
+    for (Edge& edge : edges) {
+        if (ds.find(edge.u) != ds.find(edge.v)) {
+            ds.unite(edge.u, edge.v);
+            mst.push_back(edge);
+        }
+    }
+
+    return mst;
+}
+
+vector<int> dijkstra(Graph& graph, int src) {
+    vector<int> dist(graph.V, INT_MAX);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+
+    dist[src] = 0;
+    pq.push({0, src});
+
+    while (!pq.empty()) {
+        auto [currentDist, u] = pq.top();
+        pq.pop();
+
+        if (currentDist > dist[u]) continue;
+
+        for (auto& [v, weight] : graph.adjList[u]) {
+            if (dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+
+    return dist;
+}
+
 int main() {
-    MinHeap parkingHeap;
-    parkingHeap.insert(10);
-    parkingHeap.insert(20);
-    parkingHeap.insert(5);
-    cout << "Nearest parking spot: " << parkingHeap.extractMin() << endl;
+    int V = 6; // Number of parking zones/nodes
+    Graph graph(V);
 
-    Graph g(5);
-    g.addEdge(0, 1, 10);
-    g.addEdge(0, 4, 20);
-    g.addEdge(1, 2, 30);
-    g.addEdge(1, 3, 40);
-    g.addEdge(3, 4, 50);
+    // Add edges (u, v, weight)
+    graph.addEdge(0, 1, 4);
+    graph.addEdge(0, 2, 3);
+    graph.addEdge(1, 2, 1);
+    graph.addEdge(1, 3, 2);
+    graph.addEdge(2, 4, 5);
+    graph.addEdge(3, 4, 1);
+    graph.addEdge(3, 5, 3);
+    graph.addEdge(4, 5, 2);
 
-    g.dijkstra(0);
-
-    vector<Edge> edges = {
-        {0, 1, 10}, {0, 4, 20}, {1, 2, 30}, {1, 3, 40}, {3, 4, 50}
+    // Hash map for parking availability
+    unordered_map<int, int> parkingAvailability = {
+        {0, 10}, // Zone 0 has 10 slots
+        {1, 5},  // Zone 1 has 5 slots
+        {2, 8},  // Zone 2 has 8 slots
+        {3, 0},  // Zone 3 is full
+        {4, 12}, // Zone 4 has 12 slots
+        {5, 6}   // Zone 5 has 6 slots
     };
 
-    g.kruskal(edges);
+    // Find shortest path from source (0)
+    int source = 0;
+    vector<int> distances = dijkstra(graph, source);
+
+    cout << "Shortest distances from source " << source << ":\n";
+    for (int i = 0; i < V; ++i) {
+        cout << "To zone " << i << " : " << distances[i] << "\n";
+    }
+
+    // Build MST using Kruskal's algorithm
+    vector<Edge> mst = kruskalMST(graph);
+    cout << "\nEdges in MST:\n";
+    for (auto& edge : mst) {
+        cout << "From " << edge.u << " to " << edge.v << " with weight " << edge.weight << "\n";
+    }
+
+    // Display parking availability
+    cout << "\nParking Availability:\n";
+    for (auto& [zone, slots] : parkingAvailability) {
+        cout << "Zone " << zone << ": " << slots << " slots available\n";
+    }
 
     return 0;
 }
