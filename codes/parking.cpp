@@ -165,3 +165,32 @@ int main() {
 
     return 0;
 }
+
+
+
+
+Output:
+/*
+Shortest distances from source 0:
+To zone 0 : 0
+To zone 1 : 4
+To zone 2 : 3
+To zone 3 : 6
+To zone 4 : 7
+To zone 5 : 9
+
+Edges in MST:
+From 1 to 2 with weight 1
+From 3 to 4 with weight 1
+From 1 to 3 with weight 2
+From 4 to 5 with weight 2
+From 0 to 2 with weight 3
+
+Parking Availability:
+Zone 5: 6 slots available
+Zone 4: 12 slots available
+Zone 3: 0 slots available
+Zone 2: 8 slots available
+Zone 1: 5 slots available
+Zone 0: 10 slots available
+*/
